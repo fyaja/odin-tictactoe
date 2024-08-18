@@ -11,18 +11,54 @@
 8. if there is no player that fill the winning condition then its draw
 */
 
-function createTicTacToe() {
-  let grid = ["", "", "", "", "", "", "", "", ""];
-  let currentPlayer = "x";
+const Gameboard = (() => {
+  let board = ["", "", "", "", "", "", "", "", ""];
+
+  function placeMark(index, mark) {
+    if (board[index] === "") {
+      board[index] = mark;
+      return true;
+    }
+    return false;
+  }
+
+  function reset() {
+    board = ["", "", "", "", "", "", "", "", ""];
+  }
+
+  function getBoard() {
+    return board;
+  }
+
+  return {
+    placeMark,
+    reset,
+    getBoard
+  };
+})();
+
+
+const TicTacToe = (() => {
+  const player1 = {
+    name: 'Player 1',
+    mark: 'x',
+  }
+  
+  const player2 = {
+    name: 'Player 2',
+    mark: 'o',
+  }
+
+  let currentPlayer = player1;
   let gameOver = false;
 
   function makeMove(index) {
-    return grid[index] === "" ? grid[index] = currentPlayer : false
+    return Gameboard.placeMark(index, currentPlayer.mark)
   }
   
   function resetGame() {
-    grid = ["", "", "", "", "", "", "", "", ""];
-    currentPlayer = "x";
+    Gameboard.reset()
+    currentPlayer = player1;
     gameOver = false;
     console.log("Game reset")
   }
@@ -36,28 +72,41 @@ function createTicTacToe() {
 
     return winConditions.some(condition => {
       const [a, b, c] = condition;
-      return grid[a] === player && grid[b] === player && grid[c] === player;
+      return Gameboard.getBoard()[a] === player && Gameboard.getBoard()[b] === player && Gameboard.getBoard()[c] === player;
     });
   }
 
   function checkDraw() {
-    return grid.every(cell => cell !== "");
+    return Gameboard.getBoard().every(cell => cell !== "");
+  }
+
+  function changePlayer1Name(name){
+    player1.name = name
+  }
+
+  function changePlayer2Name(name){
+    player2.name = name
   }
 
   function switchPlayer() {
-    currentPlayer = currentPlayer === "x" ? "o" : "x";
+    currentPlayer = currentPlayer === player1 ? player2 : player1;
   }
 
   function playGame(index) {
+    if (gameOver) {
+      console.log("Game over. Please reset the game.");
+      return;
+    }
+
     if (!makeMove(index)) {
       console.log("Invalid move. Try again.");
       return;
     }
 
-    console.log(grid);
+    console.log(Gameboard.getBoard());
 
-    if (checkWin(currentPlayer)) {
-      console.log(`${currentPlayer} wins!`);
+    if (checkWin(currentPlayer.mark)) {
+      console.log(`${currentPlayer.name} wins!`);
       gameOver = true;
     } else if (checkDraw()) {
       console.log("It's a draw!");
@@ -75,15 +124,7 @@ function createTicTacToe() {
     playGame,
     resetGame,
     getCurrentPlayer,
+    changePlayer1Name,
+    changePlayer2Name
   };
-}
-
-const TicTacToe = createTicTacToe()
-TicTacToe.playGame(0)
-TicTacToe.playGame(1)
-TicTacToe.playGame(3)
-TicTacToe.playGame(4)
-TicTacToe.playGame(6)
-
-TicTacToe.resetGame()
-TicTacToe.playGame(0)
+})()
