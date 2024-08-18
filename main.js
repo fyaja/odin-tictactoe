@@ -1,16 +1,3 @@
-// todo to create tic tac toe
-
-/*
-1. an array to play
-2. player x and o
-3. x goes first and set the turn
-4. player can choose the grid that they want
-5. create winning condition
-6. always check if there's player that fill the winning condition
-7. player that fills the winning condition is win and player that doesn't lose
-8. if there is no player that fill the winning condition then its draw
-*/
-
 const Gameboard = (() => {
   let board = ["", "", "", "", "", "", "", "", ""];
 
@@ -57,10 +44,11 @@ const TicTacToe = (() => {
   }
   
   function resetGame() {
-    Gameboard.reset()
+    Gameboard.reset();
     currentPlayer = player1;
     gameOver = false;
-    console.log("Game reset")
+    updateBoardUI();
+    displayMessage("-");
   }
 
   function checkWin(player) {
@@ -80,44 +68,55 @@ const TicTacToe = (() => {
     return Gameboard.getBoard().every(cell => cell !== "");
   }
 
-  function changePlayer1Name(name){
-    player1.name = name
-  }
-
-  function changePlayer2Name(name){
-    player2.name = name
-  }
-
   function switchPlayer() {
     currentPlayer = currentPlayer === player1 ? player2 : player1;
   }
 
   function playGame(index) {
     if (gameOver) {
-      console.log("Game over. Please reset the game.");
+      displayMessage("Game over. Please reset the game.");
       return;
     }
 
     if (!makeMove(index)) {
-      console.log("Invalid move. Try again.");
+      displayMessage("Invalid move. Try again.");
       return;
     }
 
-    console.log(Gameboard.getBoard());
+    updateBoardUI();
 
     if (checkWin(currentPlayer.mark)) {
-      console.log(`${currentPlayer.name} wins!`);
       gameOver = true;
+      displayMessage(`${currentPlayer.name} wins!`);
     } else if (checkDraw()) {
-      console.log("It's a draw!");
       gameOver = true;
+      displayMessage("It's a draw!");
     } else {
       switchPlayer();
+      displayMessage(`${currentPlayer.name}'s turn`);
     }
   }
 
   function getCurrentPlayer() {
     return currentPlayer;
+  }
+
+  function updateBoardUI() {
+    document.querySelectorAll('.grid .cell').forEach((cell, i) => {
+      cell.innerText = Gameboard.getBoard()[i];
+    });
+  }
+
+  function displayMessage(message) {
+    document.getElementById('message').innerText = message;
+  }
+
+  function changePlayer1Name(name){
+    player1.name = name
+  }
+
+  function changePlayer2Name(name){
+    player2.name = name
   }
 
   return {
@@ -127,4 +126,24 @@ const TicTacToe = (() => {
     changePlayer1Name,
     changePlayer2Name
   };
-})()
+})();
+
+document.querySelectorAll('.grid .cell').forEach((cell, i) => {
+  cell.addEventListener('click', () => {
+    TicTacToe.playGame(i);
+  });
+});
+
+document.getElementById('reset-button').addEventListener('click', () => {
+  TicTacToe.resetGame();
+});
+
+document.getElementById('player1-btn').addEventListener('click', () => {
+  const name = document.getElementById('player1-input').value;
+  TicTacToe.changePlayer1Name(name);
+});
+
+document.getElementById('player2-btn').addEventListener('click', () => {
+  const name = document.getElementById('player2-input').value;
+  TicTacToe.changePlayer2Name(name);
+});
