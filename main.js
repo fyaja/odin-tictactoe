@@ -48,7 +48,7 @@ const TicTacToe = (() => {
     currentPlayer = player1;
     gameOver = false;
     updateBoardUI();
-    displayMessage("-");
+    displayMessage(`${currentPlayer.name}'s turn`);
   }
 
   function checkWin(player) {
@@ -97,10 +97,6 @@ const TicTacToe = (() => {
     }
   }
 
-  function getCurrentPlayer() {
-    return currentPlayer;
-  }
-
   function updateBoardUI() {
     document.querySelectorAll('.grid .cell').forEach((cell, i) => {
       cell.innerText = Gameboard.getBoard()[i];
@@ -109,6 +105,11 @@ const TicTacToe = (() => {
 
   function displayMessage(message) {
     document.getElementById('message').innerText = message;
+    if(message === `${currentPlayer.name} wins!`){
+      document.getElementById('message').style.color = 'green'
+    } else {
+      document.getElementById('message').style.color = 'rgb(92, 92, 92)'
+    }
   }
 
   function changePlayer1Name(name){
@@ -119,14 +120,21 @@ const TicTacToe = (() => {
     player2.name = name
   }
 
+  function getCurrentPlayer(){
+    return currentPlayer
+  }
+
   return {
     playGame,
     resetGame,
     getCurrentPlayer,
+    displayMessage,
     changePlayer1Name,
     changePlayer2Name
   };
 })();
+
+TicTacToe.displayMessage(`${TicTacToe.getCurrentPlayer().name}'s turn`)
 
 document.querySelectorAll('.grid .cell').forEach((cell, i) => {
   cell.addEventListener('click', () => {
@@ -138,12 +146,19 @@ document.getElementById('reset-button').addEventListener('click', () => {
   TicTacToe.resetGame();
 });
 
+function updatePlayerName(playerId, inputId) {
+  const name = document.getElementById(inputId).value;
+  if (name.trim()) {
+    playerId === 'player1' ? TicTacToe.changePlayer1Name(name) : TicTacToe.changePlayer2Name(name);
+    TicTacToe.displayMessage(`${TicTacToe.getCurrentPlayer().name}'s turn`);
+  }
+  document.getElementById(inputId).value = '';
+}
+
 document.getElementById('player1-btn').addEventListener('click', () => {
-  const name = document.getElementById('player1-input').value;
-  TicTacToe.changePlayer1Name(name);
+  updatePlayerName('player1', 'player1-input');
 });
 
 document.getElementById('player2-btn').addEventListener('click', () => {
-  const name = document.getElementById('player2-input').value;
-  TicTacToe.changePlayer2Name(name);
+  updatePlayerName('player2', 'player2-input');
 });
