@@ -1,3 +1,29 @@
+const Gameboard = (() => {
+  let board = ["", "", "", "", "", "", "", "", ""];
+
+  function placeMark(index, mark) {
+    if (board[index] === "") {
+      board[index] = mark;
+      return true;
+    }
+    return false;
+  }
+
+  function reset() {
+    board = ["", "", "", "", "", "", "", "", ""];
+  }
+
+  function getBoard() {
+    return board;
+  }
+
+  return {
+    placeMark,
+    reset,
+    getBoard
+  };
+})();
+
 const TicTacToe = (() => {
   const player1 = {
     name: 'Player 1',
