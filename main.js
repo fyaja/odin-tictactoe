@@ -36,6 +36,7 @@ const TicTacToe = (() => {
     mark: 'o',
   }
 
+  const board = Gameboard.getBoard();
   let currentPlayer = player1;
   let gameOver = false;
 
@@ -60,12 +61,12 @@ const TicTacToe = (() => {
 
     return winConditions.some(condition => {
       const [a, b, c] = condition;
-      return Gameboard.getBoard()[a] === player && Gameboard.getBoard()[b] === player && Gameboard.getBoard()[c] === player;
+      return board[a] === player && board[b] === player && board[c] === player;
     });
   }
 
   function checkDraw() {
-    return Gameboard.getBoard().every(cell => cell !== "");
+    return board.every(cell => cell !== "");
   }
 
   function switchPlayer() {
@@ -87,7 +88,7 @@ const TicTacToe = (() => {
 
     if (checkWin(currentPlayer.mark)) {
       gameOver = true;
-      displayMessage(`${currentPlayer.name} wins!`);
+      displayMessage(`${currentPlayer.name} wins!`, 'green');
     } else if (checkDraw()) {
       gameOver = true;
       displayMessage("It's a draw!");
@@ -99,25 +100,17 @@ const TicTacToe = (() => {
 
   function updateBoardUI() {
     document.querySelectorAll('.grid .cell').forEach((cell, i) => {
-      cell.innerText = Gameboard.getBoard()[i];
+      cell.innerText = board[i];
     });
   }
 
-  function displayMessage(message) {
+  function displayMessage(message, color = 'rgb(92, 92, 92)') {
     document.getElementById('message').innerText = message;
-    if(message === `${currentPlayer.name} wins!`){
-      document.getElementById('message').style.color = 'green'
-    } else {
-      document.getElementById('message').style.color = 'rgb(92, 92, 92)'
-    }
+    document.getElementById('message').style.color = color;
   }
 
-  function changePlayer1Name(name){
-    player1.name = name
-  }
-
-  function changePlayer2Name(name){
-    player2.name = name
+  function changePlayerName(player, name){
+    player.name = name
   }
 
   function getCurrentPlayer(){
@@ -129,8 +122,7 @@ const TicTacToe = (() => {
     resetGame,
     getCurrentPlayer,
     displayMessage,
-    changePlayer1Name,
-    changePlayer2Name
+    changePlayerName,
   };
 })();
 
@@ -149,16 +141,11 @@ document.getElementById('reset-button').addEventListener('click', () => {
 function updatePlayerName(playerId, inputId) {
   const name = document.getElementById(inputId).value;
   if (name.trim()) {
-    playerId === 'player1' ? TicTacToe.changePlayer1Name(name) : TicTacToe.changePlayer2Name(name);
+    playerId === 'player1' ? TicTacToe.changePlayerName(player1, name) : TicTacToe.changePlayerName(player2, name);
     TicTacToe.displayMessage(`${TicTacToe.getCurrentPlayer().name}'s turn`);
   }
   document.getElementById(inputId).value = '';
 }
 
-document.getElementById('player1-btn').addEventListener('click', () => {
-  updatePlayerName('player1', 'player1-input');
-});
-
-document.getElementById('player2-btn').addEventListener('click', () => {
-  updatePlayerName('player2', 'player2-input');
-});
+document.getElementById('player1-btn').addEventListener('click', updatePlayerName('player1', 'player1-input'));
+document.getElementById('player2-btn').addEventListener('click', updatePlayerName('player2', 'player2-input'));
