@@ -33,7 +33,10 @@ h1 {
 h2 {
   font-size: 1rem;
   margin-bottom: 0.5rem;
-  color: rgb(92, 92, 92);
+}
+
+button {
+  font-weight: bold;
 }
 
 .content-left button {
@@ -41,7 +44,7 @@ h2 {
   cursor: pointer;
   border: none;
   padding: 0.5rem 0;
-  background-color: rgb(88, 88, 88);
+  background-color: black;
   color: white;
 }
 
@@ -68,7 +71,7 @@ h2 {
 .players-name-box {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  margin-top: 4.5rem;
   gap: 1rem;
 }
 
@@ -79,7 +82,8 @@ h2 {
 }
 
 .change-player-name label {
-  font-weight: 500;
+  font-weight: bold;
+  color: rgb(88, 88, 88);
 }
 
 .change-player-name input {
