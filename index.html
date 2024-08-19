@@ -5,40 +5,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet">
   <title>tic-tac-toe</title>
 </head>
 
 <body>
   <div class="container">
-    <h1>Tic-Tac-Toe</h1>
-
-    <div class="change-player-name">
-      <label for="player1">Player 1 Name:</label>
-      <input type="text" id="player1-input">
-      <button id="player1-btn">Change</button>
+    <div class="content-left">
+      <h1>Tic-Tac-Toe</h1>
+      <h2 id="message"></h2>
+      <div class="grid">
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+        <div class="cell"></div>
+      </div>
+      <button id="reset-button">Reset</button>
     </div>
+    <div class="players-name-box">
+      <div class="change-player-name">
+        <label for="player1">Player 1 Name:</label>
+        <input type="text" id="player1-input">
+        <button id="player1-btn">Change</button>
+      </div>
 
-    <div class="change-player-name">
-      <label for="player2">Player 2 Name:</label>
-      <input type="text" id="player2-input">
-      <button id="player2-btn">Change</button>
+      <div class="change-player-name">
+        <label for="player2">Player 2 Name:</label>
+        <input type="text" id="player2-input">
+        <button id="player2-btn">Change</button>
+      </div>
     </div>
-
-    <h2>Player 1 turn</h2>
-    <div class="grid">
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-      <div class="cell"></div>
-    </div>
-
-    <h3 id="message">-</h3>
-    <button id="reset-button">Reset</button>
   </div>
   <script src="main.js"></script>
 </body>

@@ -2,21 +2,100 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Montserrat", sans-serif;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+.container {
+  display: flex;
+  gap: 1rem;
+  max-width: 600px;
+  width: 100%;
+}
+
+.content-left {
+  max-width: 300px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+h1 {
+  margin-bottom: 0.5rem;
+}
+
+h2 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  color: rgb(92, 92, 92);
+}
+
+.content-left button {
+  margin-top: 1rem;
+  cursor: pointer;
+  border: none;
+  padding: 0.5rem 0;
+  background-color: rgb(88, 88, 88);
+  color: white;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 50px);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
 }
 
 .grid .cell {
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 2rem;
-  height: 50px;
-  border: 1px solid;
-  background-color: rgb(234, 232, 232);
+  font-size: 3rem;
+  height: 100px;
+  background-color: rgb(244, 244, 244);
   cursor: pointer;
+}
+
+.cell:hover {
+  background-color: rgb(231, 231, 231);
+}
+
+.players-name-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.change-player-name {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.change-player-name label {
+  font-weight: 500;
+}
+
+.change-player-name input {
+  padding: 0.25rem 0.5rem;
+  border: 1.5px solid rgb(88, 88, 88);
+}
+
+.change-player-name input:focus {
+  outline: none;
+  border: 1.5px solid rgb(70, 70, 255);
+}
+
+.change-player-name button {
+  border: none;
+  padding: 0.5rem 0;
+  color: white;
+  cursor: pointer;
+  background-color: rgb(101, 101, 254);
 }
