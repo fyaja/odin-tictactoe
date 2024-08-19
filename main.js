@@ -1,47 +1,19 @@
-const Gameboard = (() => {
-  let board = ["", "", "", "", "", "", "", "", ""];
-
-  function placeMark(index, mark) {
-    if (board[index] === "") {
-      board[index] = mark;
-      return true;
-    }
-    return false;
-  }
-
-  function reset() {
-    board = ["", "", "", "", "", "", "", "", ""];
-  }
-
-  function getBoard() {
-    return board;
-  }
-
-  return {
-    placeMark,
-    reset,
-    getBoard
-  };
-})();
-
-
 const TicTacToe = (() => {
   const player1 = {
     name: 'Player 1',
     mark: 'x',
-  }
+  };
   
   const player2 = {
     name: 'Player 2',
     mark: 'o',
-  }
+  };
 
-  const board = Gameboard.getBoard();
   let currentPlayer = player1;
   let gameOver = false;
 
   function makeMove(index) {
-    return Gameboard.placeMark(index, currentPlayer.mark)
+    return Gameboard.placeMark(index, currentPlayer.mark);
   }
   
   function resetGame() {
@@ -59,6 +31,7 @@ const TicTacToe = (() => {
       [0, 4, 8], [2, 4, 6]             // Diagonal
     ];
 
+    const board = Gameboard.getBoard(); 
     return winConditions.some(condition => {
       const [a, b, c] = condition;
       return board[a] === player && board[b] === player && board[c] === player;
@@ -66,6 +39,7 @@ const TicTacToe = (() => {
   }
 
   function checkDraw() {
+    const board = Gameboard.getBoard(); 
     return board.every(cell => cell !== "");
   }
 
@@ -99,6 +73,7 @@ const TicTacToe = (() => {
   }
 
   function updateBoardUI() {
+    const board = Gameboard.getBoard();
     document.querySelectorAll('.grid .cell').forEach((cell, i) => {
       cell.innerText = board[i];
     });
@@ -109,12 +84,12 @@ const TicTacToe = (() => {
     document.getElementById('message').style.color = color;
   }
 
-  function changePlayerName(player, name){
-    player.name = name
+  function changePlayerName(player, name) {
+    player.name = name;
   }
 
-  function getCurrentPlayer(){
-    return currentPlayer
+  function getCurrentPlayer() {
+    return currentPlayer;
   }
 
   return {
@@ -126,7 +101,7 @@ const TicTacToe = (() => {
   };
 })();
 
-TicTacToe.displayMessage(`${TicTacToe.getCurrentPlayer().name}'s turn`)
+TicTacToe.displayMessage(`${TicTacToe.getCurrentPlayer().name}'s turn`);
 
 document.querySelectorAll('.grid .cell').forEach((cell, i) => {
   cell.addEventListener('click', () => {
@@ -147,5 +122,5 @@ function updatePlayerName(playerId, inputId) {
   document.getElementById(inputId).value = '';
 }
 
-document.getElementById('player1-btn').addEventListener('click', updatePlayerName('player1', 'player1-input'));
-document.getElementById('player2-btn').addEventListener('click', updatePlayerName('player2', 'player2-input'));
+document.getElementById('player1-btn').addEventListener('click', () => updatePlayerName('player1', 'player1-input'));
+document.getElementById('player2-btn').addEventListener('click', () => updatePlayerName('player2', 'player2-input'));
